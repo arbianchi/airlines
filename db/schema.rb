@@ -16,6 +16,13 @@ ActiveRecord::Schema.define(version: 20190805160038) do
   enable_extension "plpgsql"
 
   create_table "flights", force: :cascade do |t|
+    t.string   "origin"
+    t.string   "destination"
+    t.datetime "departure_time"
+    t.float    "duration"
+    t.decimal  "price",          precision: 10, scale: 2
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
 end
