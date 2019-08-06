@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190805160038) do
+ActiveRecord::Schema.define(version: 20190806145549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20190805160038) do
     t.string   "origin"
     t.string   "destination"
     t.datetime "departure_time"
-    t.float    "duration"
-    t.decimal  "price",          precision: 10, scale: 2
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.integer  "duration"
+    t.decimal  "price",          precision: 100, scale: 2
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
 end

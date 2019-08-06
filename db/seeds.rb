@@ -3,5 +3,8 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+flights = Flight.create([
+    { origin: 'Raleigh', destination: 'Paris', departure_time: 1.days.from_now, duration: 25200, price: 300 }, 
+    { origin: 'Raleigh', destination: 'Montreal', departure_time: 10.days.from_now, duration: 4600, price: 400 }, 
+    { origin: 'Raleigh', destination: 'Neverland', departure_time: 11.days.from_now, duration: 3600, price: 500}, 
+])

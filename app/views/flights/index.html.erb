@@ -1,0 +1,26 @@
+
+<h1>Spreedly Airlines - Adina Division Flights</h1>
+ 
+<table>
+  <thead>
+    <tr>
+      <th>Origin</th>
+      <th>Destination</th>
+      <th>Duration</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <% @flights.each do |flight| %>
+      <tr>
+        <td><%= flight.origin %></td>
+        <td><%= flight.destination %></td>
+        <td><%= flight.hours %></td>
+        <td><%= number_to_currency(flight.price) %></td>
+        <td><%= link_to "Purchase", purchase_path(flight), method: :post %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

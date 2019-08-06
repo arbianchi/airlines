@@ -4,8 +4,8 @@ class CreateFlights < ActiveRecord::Migration[5.0]
       t.string :origin
       t.string :destination
       t.timestamp :departure_time
-      t.float :duration
-      t.decimal :price, precision: 10, scale: 2
+      t.integer :duration
+      t.decimal :price, precision: 100, scale: 2
       t.timestamps
     end
   end
