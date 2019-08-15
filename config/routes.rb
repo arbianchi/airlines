@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'flights#index'
 
-  post '/purchase', to: 'flights#purchase'
+  get '/purchase', to: 'flights#purchase'
+  get '/checkout', to: 'flights#checkout'
+  get '/transactions', to: 'flights#transactions'
 
 end

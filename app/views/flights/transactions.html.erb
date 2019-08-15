@@ -1,0 +1,26 @@
+<h1>Transactions</h1>
+ 
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Card</th>
+      <th>Succeeded</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <% @purchases.each do |purchase| %>
+      <tr>
+        <td><%= purchase.amount %></td>
+        <td><%= purchase.created_at %></td>
+        <td><%= purchase.payment_method.last_four_digits %></td>
+        <td><%= purchase.succeeded %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to "Back to Flights", root_path %>

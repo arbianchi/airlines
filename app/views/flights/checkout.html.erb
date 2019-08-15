@@ -1,0 +1,88 @@
+
+<h2>Purchase Flight: <%= @flight.origin %> to <%= @flight.destination %></h2>
+<h4>Total: <%= number_to_currency(@flight.price) %></h4>
+
+<button data-retain="true" data-amount="<%=@flight.price%>" class="purchase">Purchase With Credit Card</button>
+
+<button data-amount="<%=@flight.price%>" data-receiver="expedia" class="purchase">Purchase With Expedia</button>
+
+<h4>OR</h4>
+
+<h4>Use Saved Payment Method:</h4>
+ 
+<table>
+  <thead>
+    <tr>
+      <th>Brand</th>
+      <th>Name</th>
+      <th>Expiration</th>
+      <th>Last 4</th>
+      <th></th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <% @credit_cards.each do |card| %>
+      <tr>
+        <td><%= card.card_type.capitalize %></td>
+        <td><%= card.full_name %></td>
+        <td><%= card.month %> / <%= card.year %></td>
+        <td><%= card.last_four_digits %></td>
+        <td>
+            <%= link_to "Use", purchase_path(amount: @flight.price, payment_method_token: card.token) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+ 
+<button data-retain="true" data-amount="<%=@flight.price%>" class="purchase">Add New Card</button>
+
+<form id="payment-form" action="/purchase">
+  <input type="hidden" name="payment_method_token" id="payment_method_token">
+  <input type="hidden" name="amount" id="amount" >
+  <input type="hidden" name="receiver" id="receiver" >
+  <input type="hidden" name="retain" id="retain" >
+</form>
+
+<br>
+<%= link_to "Back to Flights", root_path %>
+
+<script>
+  var amount = 0;
+  var receiver = false;
+  var retain = false;
+  var key = "<%= ENV['ENVIRONMENT_KEY']%>";
+
+  $(document).ready(function() {
+    $(".purchase").on("click", function(e) {
+      amount = e.target.dataset.amount
+      SpreedlyExpress.init(key, {
+        "amount": amount,
+        "company_name": "Spreedly Airlines - Adina Division"
+      });
+      if (e.target.dataset.receiver) receiver = true;
+      if (e.target.dataset.retain) retain = true;
+      SpreedlyExpress.openView();
+    });
+  });
+
+  SpreedlyExpress.onPaymentMethod(function(token, paymentMethod) {
+    var tokenField = document.getElementById("payment_method_token");
+    tokenField.setAttribute("value", token);
+
+    var amountField = document.getElementById("amount");
+    amountField.setAttribute("value", amount);
+
+    var receiverField = document.getElementById("receiver");
+    receiverField.setAttribute("value", receiver);
+
+    var retainField = document.getElementById("retain");
+    retainField.setAttribute("value", retain);
+
+    var masterForm = document.getElementById('payment-form');
+    masterForm.submit();
+  });
+</script>

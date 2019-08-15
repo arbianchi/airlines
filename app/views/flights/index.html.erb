@@ -19,8 +19,44 @@
         <td><%= flight.destination %></td>
         <td><%= flight.hours %></td>
         <td><%= number_to_currency(flight.price) %></td>
-        <td><%= link_to "Purchase", purchase_path(flight), method: :post %></td>
+        <td>
+          <%= link_to "Purchase", checkout_path(flight: flight) %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<br>
+<%= link_to "View Transactions", transactions_path %>
+
+<script>
+  var amount = 0;
+  var receiver = false;
+
+  $(document).ready(function() {
+    $(".purchase").on("click", function(e) {
+      amount = e.target.dataset.amount
+      SpreedlyExpress.init("UivgfF2TQABwmYW4Tcg8KodJsg8", {
+        "amount": amount,
+        "company_name": "Spreedly Airlines - Adina Division"
+      });
+      if (e.target.dataset.receiver) receiver = true;
+      SpreedlyExpress.openView();
+    });
+  });
+
+  SpreedlyExpress.onPaymentMethod(function(token, paymentMethod) {
+    var tokenField = document.getElementById("payment_method_token");
+    tokenField.setAttribute("value", token);
+
+    var amountField = document.getElementById("amount");
+    amountField.setAttribute("value", amount);
+
+    var amountField = document.getElementById("receiver");
+    amountField.setAttribute("value", receiver);
+
+    var masterForm = document.getElementById('payment-form');
+    masterForm.submit();
+  });
+</script>
